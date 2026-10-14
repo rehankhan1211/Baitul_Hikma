@@ -246,7 +246,7 @@ class AboutScreen extends StatelessWidget {
                 children: [
                   _CategoryRow(
                     icon: Icons.menu_book_rounded,
-                    title: 'The Noble Quran',
+                    title: 'Al Quran',
                     subtitle:
                         'Full 114 Surahs with authentic Amiri Arabic typography and verified translations.',
                     isDark: isDark,
@@ -291,61 +291,7 @@ class AboutScreen extends StatelessWidget {
                 ).copyWith(height: 1.7),
               ),
             ),
-            const SizedBox(height: 16),
-
-            // ── OPEN SOURCE & CREDITS ──
-            _EditorialCard(
-              title: 'ACKNOWLEDGEMENTS & OPEN SOURCE',
-              isDark: isDark,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Built with passion using open-source technologies:',
-                    style: AppTextStyles.bodySmall(
-                      color: isDark ? AppColors.sage : AppColors.inkFaint,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  const _CreditTag(label: 'Flutter & Dart (Google)'),
-                  const _CreditTag(
-                    label: 'Amiri Font (Khaled Hosny & Google Fonts)',
-                  ),
-                  const _CreditTag(
-                    label: 'Cormorant Garamond (Christian Thalmann)',
-                  ),
-                  const _CreditTag(label: 'Inter Font (Rasmus Andersson)'),
-                  const _CreditTag(
-                    label: 'BLoC State Management (Felix Angelov)',
-                  ),
-                  const _CreditTag(label: 'GoRouter (Flutter Community)'),
-                  const SizedBox(height: 12),
-                  OutlinedButton.icon(
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor:
-                          isDark ? AppColors.gold : AppColors.emerald,
-                      side: BorderSide(
-                        color: isDark ? AppColors.gold : AppColors.emerald,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    icon: const Icon(Icons.code_rounded, size: 16),
-                    label: const Text('View Software Licenses'),
-                    onPressed: () {
-                      showLicensePage(
-                        context: context,
-                        applicationName: AppConstants.appName,
-                        applicationVersion: '1.0.0',
-                        applicationLegalese:
-                            'Crafted for the global community of knowledge seekers.',
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
+         
             const SizedBox(height: 16),
 
             // ── CONTACT & LEGAL ──
@@ -533,35 +479,3 @@ class _CategoryRow extends StatelessWidget {
   }
 }
 
-class _CreditTag extends StatelessWidget {
-  final String label;
-  const _CreditTag({required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 6),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.check_circle_outline_rounded,
-            size: 14,
-            color: AppColors.gold,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              label,
-              style: AppTextStyles.bodySmall(
-                color:
-                    Theme.of(context).brightness == Brightness.dark
-                        ? AppColors.ivoryDark
-                        : AppColors.inkLight,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}

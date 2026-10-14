@@ -8,6 +8,7 @@ import '../features/hadith/view/hadith_screen.dart';
 import '../features/explore/view/explore_screen.dart';
 import '../features/library/view/library_screen.dart';
 import '../features/history/view/history_reader_screen.dart';
+import '../features/history/view/reading_history_screen.dart';
 import '../features/settings/view/settings_screen.dart';
 import '../features/profile/view/profile_screen.dart';
 import '../features/about/view/about_screen.dart';
@@ -152,6 +153,17 @@ final GoRouter appRouter = GoRouter(
       path: '/about',
       parentNavigatorKey: _rootKey,
       pageBuilder: (context, state) => _buildPage(state, const AboutScreen()),
+    ),
+    GoRoute(
+      path: '/reading-history',
+      parentNavigatorKey: _rootKey,
+      pageBuilder: (context, state) => _buildPage(
+        state,
+        BlocProvider(
+          create: (_) => di<LibraryCubit>()..load(),
+          child: const ReadingHistoryScreen(),
+        ),
+      ),
     ),
   ],
 );

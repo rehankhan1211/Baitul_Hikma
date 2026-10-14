@@ -63,6 +63,7 @@ class AppStrings {
   String get profile => myProfile;
   String get aboutBaitulHikma => aboutTitle;
   String get quran => nobleQuran;
+  String get alQuran => nobleQuran;
   String get surah => surahTab;
   String get juz => juzTab;
   String get hadith => _t({
@@ -181,7 +182,7 @@ class AppStrings {
 
   // --- Quran Screen ---
   String get nobleQuran => _t({
-    'en': 'The Noble Quran',
+    'en': 'Al Quran',
     'ar': 'القرآن الكريم',
     'ur': 'قرآن مجید',
     'id': 'Al-Qur\'an Al-Karim',

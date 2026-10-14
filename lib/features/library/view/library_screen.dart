@@ -35,144 +35,14 @@ class LibraryScreen extends StatelessWidget {
                       AppTopActions(isDark: isDark),
                       const SizedBox(width: 4),
                     ],
-                    bottom: PreferredSize(
-                      preferredSize: const Size.fromHeight(52),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-                        child: Row(
-                          children: [
-                            _TabButton(
-                              label: context.l10n.bookmarks,
-                              icon: Icons.bookmarks_rounded,
-                              isActive:
-                                  state.currentTab == LibraryTab.bookmarks,
-                              isDark: isDark,
-                              count: state.bookmarks.length,
-                              onTap:
-                                  () => context.read<LibraryCubit>().setTab(
-                                    LibraryTab.bookmarks,
-                                  ),
-                            ),
-                            const SizedBox(width: 10),
-                            _TabButton(
-                              label: context.l10n.history,
-                              icon: Icons.history_rounded,
-                              isActive: state.currentTab == LibraryTab.history,
-                              isDark: isDark,
-                              count: state.readingHistory.length,
-                              onTap:
-                                  () => context.read<LibraryCubit>().setTab(
-                                    LibraryTab.history,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                   ),
                 ],
-            body: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              child:
-                  state.currentTab == LibraryTab.bookmarks
-                      ? _BookmarksTab(
-                        bookmarks: state.bookmarks,
-                        isDark: isDark,
-                        key: const ValueKey('bookmarks'),
-                      )
-                      : _HistoryTab(
-                        history: state.readingHistory,
-                        isDark: isDark,
-                        key: const ValueKey('history'),
-                      ),
+            body: _BookmarksTab(
+              bookmarks: state.bookmarks,
+              isDark: isDark,
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class _TabButton extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final bool isActive;
-  final bool isDark;
-  final int count;
-  final VoidCallback onTap;
-
-  const _TabButton({
-    required this.label,
-    required this.icon,
-    required this.isActive,
-    required this.isDark,
-    required this.count,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-        decoration: BoxDecoration(
-          color:
-              isActive
-                  ? (isDark ? AppColors.emeraldLight : AppColors.emerald)
-                  : (isDark ? AppColors.darkCard : AppColors.ivory),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color:
-                isActive
-                    ? (isDark ? AppColors.emeraldLight : AppColors.emerald)
-                    : (isDark ? AppColors.darkDivider : AppColors.ivoryDark),
-          ),
-        ),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              size: 16,
-              color:
-                  isActive
-                      ? Colors.white
-                      : (isDark ? AppColors.sage : AppColors.inkFaint),
-            ),
-            const SizedBox(width: 6),
-            Text(
-              label,
-              style: AppTextStyles.labelLarge(
-                color:
-                    isActive
-                        ? Colors.white
-                        : (isDark ? AppColors.sage : AppColors.inkFaint),
-              ).copyWith(fontSize: 13),
-            ),
-            if (count > 0) ...[
-              const SizedBox(width: 6),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(
-                  color:
-                      isActive
-                          ? Colors.white.withValues(alpha: 0.25)
-                          : AppColors.gold.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  '$count',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                    color: isActive ? Colors.white : AppColors.goldDark,
-                  ),
-                ),
-              ),
-            ],
-          ],
-        ),
       ),
     );
   }
@@ -185,7 +55,6 @@ class _BookmarksTab extends StatelessWidget {
   const _BookmarksTab({
     required this.bookmarks,
     required this.isDark,
-    super.key,
   });
 
   @override
@@ -325,79 +194,6 @@ class _BookmarkCard extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _HistoryTab extends StatelessWidget {
-  final List<Map<String, String>> history;
-  final bool isDark;
-
-  const _HistoryTab({required this.history, required this.isDark, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    if (history.isEmpty) {
-      return _EmptyState(
-        icon: '📚',
-        title: 'No reading history',
-        subtitle: 'Your recently read content will appear here.',
-        isDark: isDark,
-      );
-    }
-
-    return ListView.separated(
-      padding: const EdgeInsets.all(16),
-      itemCount: history.length,
-      separatorBuilder: (_, __) => const Divider(height: 1),
-      itemBuilder: (context, i) {
-        final item = history[i];
-        final date =
-            item['date'] != null ? DateTime.tryParse(item['date']!) : null;
-        return ListTile(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 4,
-            vertical: 4,
-          ),
-          leading: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.emerald.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Icon(
-              Icons.history_edu_rounded,
-              color: AppColors.emerald,
-              size: 20,
-            ),
-          ),
-          title: Text(
-            item['title'] ?? '',
-            style: AppTextStyles.bodyMedium(
-              color: isDark ? AppColors.ivory : AppColors.ink,
-            ).copyWith(fontWeight: FontWeight.w500),
-          ),
-          subtitle:
-              date != null
-                  ? Text(
-                    _formatDate(date),
-                    style: AppTextStyles.bodySmall(
-                      color: isDark ? AppColors.sage : AppColors.inkFaint,
-                    ),
-                  )
-                  : null,
-        );
-      },
-    );
-  }
-
-  String _formatDate(DateTime d) {
-    final now = DateTime.now();
-    final diff = now.difference(d);
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays == 1) return 'Yesterday';
-    return '${d.day}/${d.month}/${d.year}';
   }
 }
 

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../data/models/surah_model.dart';
 
 class DailyAyahCard extends StatelessWidget {
   final AyahModel ayah;
-  const DailyAyahCard({super.key, required this.ayah});
+  final VoidCallback? onTap;
+
+  const DailyAyahCard({super.key, required this.ayah, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -30,70 +33,79 @@ class DailyAyahCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Stack(
-        children: [
-          // Decorative geometric pattern
-          Positioned(
-            right: -20,
-            top: -20,
-            child: _GeometricDecoration(isDark: isDark),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: onTap ?? () => context.push('/quran/surah/${ayah.surahNumber}'),
+          child: Stack(
+            children: [
+              // Decorative geometric pattern
+              Positioned(
+                right: -20,
+                top: -20,
+                child: _GeometricDecoration(isDark: isDark),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.gold.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: AppColors.gold.withValues(alpha: 0.4),
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.gold.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: AppColors.gold.withValues(alpha: 0.4),
+                            ),
+                          ),
+                          child: Text(
+                            'Surah Al-Fatihah ${ayah.surahNumber}:${ayah.ayahNumber}',
+                            style: AppTextStyles.labelMedium(
+                              color: AppColors.gold,
+                            ).copyWith(fontSize: 10),
+                          ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      ayah.arabicText,
+                      textAlign: TextAlign.right,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: 'Amiri',
+                        fontSize: 26,
+                        color: Colors.white,
+                        height: 2.0,
                       ),
-                      child: Text(
-                        'Surah Al-Fatihah ${ayah.surahNumber}:${ayah.ayahNumber}',
-                        style: AppTextStyles.labelMedium(
-                          color: AppColors.gold,
-                        ).copyWith(fontSize: 10),
-                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Container(
+                      height: 1,
+                      color: Colors.white.withValues(alpha: 0.15),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      ayah.translation,
+                      style: AppTextStyles.bodyMedium(
+                        color: Colors.white70,
+                      ).copyWith(fontStyle: FontStyle.italic, height: 1.6),
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  ayah.arabicText,
-                  textAlign: TextAlign.right,
-                  textDirection: TextDirection.rtl,
-                  style: TextStyle(
-                    fontFamily: 'Amiri',
-                    fontSize: 26,
-                    color: Colors.white,
-                    height: 2.0,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Container(
-                  height: 1,
-                  color: Colors.white.withValues(alpha: 0.15),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  ayah.translation,
-                  style: AppTextStyles.bodyMedium(
-                    color: Colors.white70,
-                  ).copyWith(fontStyle: FontStyle.italic, height: 1.6),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

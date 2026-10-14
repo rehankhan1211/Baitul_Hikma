@@ -23,6 +23,7 @@ class AppRoutes {
   static const String settings = '/settings';
   static const String profile = '/profile';
   static const String about = '/about';
+  static const String readingHistory = '/reading-history';
   static const String bookReader = '/book-reader/:type/:id';
   static const String search = '/search';
 }

@@ -149,11 +149,11 @@ class HomeDrawer extends StatelessWidget {
                       ),
                       _DrawerTile(
                         icon: Icons.menu_book_rounded,
-                        label: 'The Noble Quran',
+                        label: 'Ayah Collections',
                         isDark: isDark,
                         onTap: () {
                           Navigator.of(context).pop();
-                          context.go(AppRoutes.quran);
+                          context.push('/quran/surah/1');
                         },
                       ),
                       _DrawerTile(
@@ -163,24 +163,6 @@ class HomeDrawer extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).pop();
                           context.go(AppRoutes.hadith);
-                        },
-                      ),
-                      _DrawerTile(
-                        icon: Icons.history_edu_rounded,
-                        label: 'Historical Chronicles',
-                        isDark: isDark,
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          context.go(AppRoutes.explore);
-                        },
-                      ),
-                      _DrawerTile(
-                        icon: Icons.bookmarks_outlined,
-                        label: 'Saved Bookmarks',
-                        isDark: isDark,
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          context.go(AppRoutes.library);
                         },
                       ),
                       Padding(
@@ -193,24 +175,44 @@ class HomeDrawer extends StatelessWidget {
                         ),
                       ),
 
-                      // ── PROFILE SECTION ──
+                      // ── HISTORY SECTION ──
                       Padding(
                         padding: const EdgeInsets.only(left: 12, bottom: 8),
                         child: Text(
-                          'PROFILE',
+                          'HISTORY',
                           style: AppTextStyles.sectionLabel(
                             color: isDark ? AppColors.gold : AppColors.emerald,
                           ),
                         ),
                       ),
                       _DrawerTile(
-                        icon: Icons.person_outline_rounded,
-                        label: 'My Profile',
+                        icon: Icons.history_rounded,
+                        label: 'Reading History',
                         isDark: isDark,
                         onTap: () {
                           Navigator.of(context).pop();
-                          context.push(AppRoutes.profile);
+                          context.push(AppRoutes.readingHistory);
                         },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Divider(
+                          color:
+                              isDark
+                                  ? AppColors.darkDivider
+                                  : AppColors.ivoryDark,
+                        ),
+                      ),
+
+                      // ── SETTINGS SECTION ──
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12, bottom: 8),
+                        child: Text(
+                          'SETTINGS',
+                          style: AppTextStyles.sectionLabel(
+                            color: isDark ? AppColors.gold : AppColors.emerald,
+                          ),
+                        ),
                       ),
                       _DrawerTile(
                         icon: Icons.settings_outlined,
