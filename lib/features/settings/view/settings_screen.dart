@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../bloc/settings_cubit.dart';
-import '../../auth/bloc/auth_cubit.dart';
-import '../../auth/bloc/auth_state.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -134,65 +132,7 @@ class SettingsScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             children: [
-              // ── ACCOUNT SUMMARY ──
-              BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, authState) {
-                  final name =
-                      authState.userName.isNotEmpty
-                          ? authState.userName
-                          : 'Seeker of Knowledge';
-                  final email =
-                      authState.userEmail.isNotEmpty
-                          ? authState.userEmail
-                          : (authState.isGuest
-                              ? 'Guest Access'
-                              : 'Not signed in');
 
-                  return _SettingsSection(
-                    title: 'ACCOUNT',
-                    isDark: isDark,
-                    children: [
-                      ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 6,
-                        ),
-                        leading: CircleAvatar(
-                          radius: 22,
-                          backgroundColor: AppColors.emerald,
-                          child: Text(
-                            name.isNotEmpty ? name[0].toUpperCase() : 'S',
-                            style: const TextStyle(
-                              color: AppColors.gold,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        title: Text(
-                          name,
-                          style: AppTextStyles.labelLarge(
-                            color: isDark ? AppColors.ivory : AppColors.ink,
-                          ).copyWith(fontSize: 15),
-                        ),
-                        subtitle: Text(
-                          email,
-                          style: AppTextStyles.bodySmall(
-                            color: isDark ? AppColors.sage : AppColors.inkFaint,
-                          ),
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: 14,
-                          color: isDark ? AppColors.sage : AppColors.inkFaint,
-                        ),
-                        onTap: () => context.push(AppRoutes.profile),
-                      ),
-                    ],
-                  );
-                },
-              ),
-              const SizedBox(height: 20),
 
               // ── APPEARANCE ──
               _SettingsSection(

@@ -137,44 +137,9 @@ class HomeDrawer extends StatelessWidget {
                       vertical: 12,
                     ),
                     children: [
-                      _DrawerTile(
-                        icon: Icons.person_outline_rounded,
-                        label: 'My Profile',
-                        isDark: isDark,
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          context.push(AppRoutes.profile);
-                        },
-                      ),
-                      _DrawerTile(
-                        icon: Icons.settings_outlined,
-                        label: 'Settings',
-                        isDark: isDark,
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          context.push(AppRoutes.settings);
-                        },
-                      ),
-                      _DrawerTile(
-                        icon: Icons.info_outline_rounded,
-                        label: 'About Baitul Hikma',
-                        isDark: isDark,
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          context.push(AppRoutes.about);
-                        },
-                      ),
+                      // ── COLLECTIONS SECTION ──
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Divider(
-                          color:
-                              isDark
-                                  ? AppColors.darkDivider
-                                  : AppColors.ivoryDark,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12, bottom: 8),
+                        padding: const EdgeInsets.only(left: 12, bottom: 8, top: 4),
                         child: Text(
                           'COLLECTIONS',
                           style: AppTextStyles.sectionLabel(
@@ -227,6 +192,74 @@ class HomeDrawer extends StatelessWidget {
                                   : AppColors.ivoryDark,
                         ),
                       ),
+
+                      // ── PROFILE SECTION ──
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12, bottom: 8),
+                        child: Text(
+                          'PROFILE',
+                          style: AppTextStyles.sectionLabel(
+                            color: isDark ? AppColors.gold : AppColors.emerald,
+                          ),
+                        ),
+                      ),
+                      _DrawerTile(
+                        icon: Icons.person_outline_rounded,
+                        label: 'My Profile',
+                        isDark: isDark,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          context.push(AppRoutes.profile);
+                        },
+                      ),
+                      _DrawerTile(
+                        icon: Icons.settings_outlined,
+                        label: 'Settings',
+                        isDark: isDark,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          context.push(AppRoutes.settings);
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Divider(
+                          color:
+                              isDark
+                                  ? AppColors.darkDivider
+                                  : AppColors.ivoryDark,
+                        ),
+                      ),
+
+                      // ── ABOUT SECTION ──
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12, bottom: 8),
+                        child: Text(
+                          'ABOUT',
+                          style: AppTextStyles.sectionLabel(
+                            color: isDark ? AppColors.gold : AppColors.emerald,
+                          ),
+                        ),
+                      ),
+                      _DrawerTile(
+                        icon: Icons.info_outline_rounded,
+                        label: 'About Baitul Hikma',
+                        isDark: isDark,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          context.push(AppRoutes.about);
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Divider(
+                          color:
+                              isDark
+                                  ? AppColors.darkDivider
+                                  : AppColors.ivoryDark,
+                        ),
+                      ),
+
                       _DrawerTile(
                         icon: CupertinoIcons.square_arrow_right,
                         label: authState.isLoggedIn ? 'Sign Out' : 'Sign In',
